@@ -1,0 +1,33 @@
+#-------------------------------------------------
+#
+# Project created by QtCreator 2014-03-21T20:51:32
+#
+#-------------------------------------------------
+
+QT       += core gui
+
+TARGET = inpaintView
+TEMPLATE = app
+
+
+SOURCES += main.cpp\
+        mainwindow.cpp \
+    mycanvas.cpp \
+    PaintWidget.cpp \
+    Shape.cpp \
+    pie.cpp \
+    inpainting.cpp \
+    image.cpp
+
+HEADERS  += mainwindow.h \
+    mycanvas.h \
+    paintwidget.h \
+    pie.h \
+    shape.h \
+    inpainting.h \
+    image.h
+
+FORMS    += mainwindow.ui
+
+RESOURCES += \
+    resource.qrc

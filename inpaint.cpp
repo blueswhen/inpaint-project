@@ -1,0 +1,15 @@
+// inpaint.cpp : Defines the entry point for the console application.
+//
+#include<iostream>
+
+#include "inpainting.h"
+using namespace std;
+int main(int argc, char* argv[])
+{
+cout<<"*"<<endl;
+	inpainting test("pix.bmp");
+cout<<"*"<<endl;
+	test.process();
+	return 0;
+}
+

@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/image">
+        <file>in.bmp</file>
+        <file>pie.png</file>
+    </qresource>
+</RCC>
