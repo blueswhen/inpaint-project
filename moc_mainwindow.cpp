@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Sun Mar 23 14:47:31 2014
+** Created: Sat Mar 29 20:51:47 2014
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,36 +23,30 @@ static const uint qt_meta_data_MainWindow[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       8,   14, // methods
+       6,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       1,       // signalCount
-
- // signals: signature, parameters, type, tag, flags
-      12,   11,   11,   11, 0x05,
+       0,       // signalCount
 
  // slots: signature, parameters, type, tag, flags
-      44,   11,   11,   11, 0x08,
-      75,   69,   11,   11, 0x08,
-     105,   11,   11,   11, 0x08,
+      12,   11,   11,   11, 0x08,
+      43,   37,   11,   11, 0x08,
+      73,   11,   11,   11, 0x08,
+     102,   11,   11,   11, 0x08,
      134,   11,   11,   11, 0x08,
-     166,   11,   11,   11, 0x08,
-     188,   11,   11,   11, 0x08,
-     200,   11,   11,   11, 0x08,
+     146,   11,   11,   11, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_MainWindow[] = {
-    "MainWindow\0\0changeCurrentShape(Shape::Code)\0"
-    "paintEvent(QPaintEvent*)\0event\0"
-    "mousePressEvent(QMouseEvent*)\0"
+    "MainWindow\0\0paintEvent(QPaintEvent*)\0"
+    "event\0mousePressEvent(QMouseEvent*)\0"
     "mouseMoveEvent(QMouseEvent*)\0"
     "mouseReleaseEvent(QMouseEvent*)\0"
-    "saveActionTriggered()\0chooseBmp()\0"
-    "saveBmp()\0"
+    "chooseBmp()\0saveBmp()\0"
 };
 
 const QMetaObject MainWindow::staticMetaObject = {
@@ -84,25 +78,16 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: changeCurrentShape((*reinterpret_cast< Shape::Code(*)>(_a[1]))); break;
-        case 1: paintEvent((*reinterpret_cast< QPaintEvent*(*)>(_a[1]))); break;
-        case 2: mousePressEvent((*reinterpret_cast< QMouseEvent*(*)>(_a[1]))); break;
-        case 3: mouseMoveEvent((*reinterpret_cast< QMouseEvent*(*)>(_a[1]))); break;
-        case 4: mouseReleaseEvent((*reinterpret_cast< QMouseEvent*(*)>(_a[1]))); break;
-        case 5: saveActionTriggered(); break;
-        case 6: chooseBmp(); break;
-        case 7: saveBmp(); break;
+        case 0: paintEvent((*reinterpret_cast< QPaintEvent*(*)>(_a[1]))); break;
+        case 1: mousePressEvent((*reinterpret_cast< QMouseEvent*(*)>(_a[1]))); break;
+        case 2: mouseMoveEvent((*reinterpret_cast< QMouseEvent*(*)>(_a[1]))); break;
+        case 3: mouseReleaseEvent((*reinterpret_cast< QMouseEvent*(*)>(_a[1]))); break;
+        case 4: chooseBmp(); break;
+        case 5: saveBmp(); break;
         default: ;
         }
-        _id -= 8;
+        _id -= 6;
     }
     return _id;
-}
-
-// SIGNAL 0
-void MainWindow::changeCurrentShape(Shape::Code _t1)
-{
-    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
-    QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_END_MOC_NAMESPACE

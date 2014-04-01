@@ -12,18 +12,10 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    mycanvas.cpp \
-    PaintWidget.cpp \
-    Shape.cpp \
-    pie.cpp \
     inpainting.cpp \
     image.cpp
 
 HEADERS  += mainwindow.h \
-    mycanvas.h \
-    paintwidget.h \
-    pie.h \
-    shape.h \
     inpainting.h \
     image.h
 

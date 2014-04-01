@@ -8,137 +8,110 @@
 #include "inpainting.h"
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
-{
+    ui(new Ui::MainWindow) {
     this->setAttribute(Qt::WA_PaintOutsidePaintEvent);
     QToolBar *bar = this->addToolBar("Tools");
     QActionGroup *group = new QActionGroup(bar);
     ui->setupUi(this);
-    //ui->graphicsView->setScene(&canvas );
     pix = QPixmap(500,500);
-        pix.fill(Qt::white);
-        pix.load(":/image/in.bmp");
-        isDrawing = false;
+    pix.fill(Qt::white);
+    isDrawing = false;
 
-        QAction *chooseAction = new QAction("Choose",bar);
-            chooseAction->setToolTip(tr("Save."));
-            chooseAction->setStatusTip(tr("Save."));
-            chooseAction->setCheckable(true);
+    QAction *chooseAction = new QAction("Choose",bar);
+    chooseAction->setToolTip(tr("Save."));
+    chooseAction->setStatusTip(tr("Save."));
+    chooseAction->setCheckable(true);
 
-            group->addAction(chooseAction);
-            bar->addAction(chooseAction);
-            connect(chooseAction,SIGNAL(triggered()),this,
-                        SLOT(chooseBmp()));
+    group->addAction(chooseAction);
+    bar->addAction(chooseAction);
+    connect(chooseAction,SIGNAL(triggered()),this,SLOT(chooseBmp()));
 
-        QAction *saveAction = new QAction("Save",bar);
-            saveAction->setToolTip(tr("Save."));
-            saveAction->setStatusTip(tr("Save."));
-            saveAction->setCheckable(true);
+    QAction *saveAction = new QAction("Save",bar);
+    saveAction->setToolTip(tr("Save."));
+    saveAction->setStatusTip(tr("Save."));
+    saveAction->setCheckable(true);
 
-            group->addAction(saveAction);
-            bar->addAction(saveAction);
-            connect(saveAction,SIGNAL(triggered()),this,
-                        SLOT(saveBmp()));
-      /*       QLabel *statusMsg = new QLabel;       //set status bar
-            statusBar()->addWidget(statusMsg);
-
-            PaintWidget *paintWidget = new PaintWidget(this);
-            setCentralWidget(paintWidget);
-            connect(saveAction,SIGNAL(triggered()),this,
-                        SLOT(saveActionTriggered()));
-
-                connect(this,SIGNAL(changeCurrentShape(Shape::Code)),paintWidget,
-                        SLOT(setCurrentShape(Shape::Code)));*/
+    group->addAction(saveAction);
+    bar->addAction(saveAction);
+    connect(saveAction,SIGNAL(triggered()),this,SLOT(saveBmp()));
 }
-void MainWindow::mousePressEvent(QMouseEvent *event)
-{
-    if(event->button()==Qt::LeftButton) //鼠标左键按下
-    {
+void MainWindow::mousePressEvent(QMouseEvent *event) {
+    if(event->button() == Qt::LeftButton) {
         lastPoint = event->pos();
-        isDrawing = true;   //正在绘图
+        isDrawing = true;   
     }
 }
 
 
-void MainWindow::mouseMoveEvent(QMouseEvent *event)
-{
-    if(event->buttons()&Qt::LeftButton) //鼠标左键按下的同时移动鼠标
-    {
+void MainWindow::mouseMoveEvent(QMouseEvent *event) {
+    if(event->buttons()&Qt::LeftButton) {
         endPoint = event->pos();
         update();
     }
 }
 
 
-void MainWindow::mouseReleaseEvent(QMouseEvent *event)
-{
-    if(event->button() == Qt::LeftButton) //鼠标左键释放
-    {
+void MainWindow::mouseReleaseEvent(QMouseEvent *event) {
+    if(event->button() == Qt::LeftButton) {
         endPoint = event->pos();
-        isDrawing = false;    //结束绘图
+        isDrawing = false;    
         update();
     }
 }
-void MainWindow::paintEvent(QPaintEvent *)
-{
-
+void MainWindow::paintEvent(QPaintEvent *) {
     int x,y,w,h;
     x = lastPoint.x();
     y = lastPoint.y();
     w = endPoint.x() - x;
     h = endPoint.y() - y;
-
     QPainter painter(this);
-    if(isDrawing)     //如果正在绘图
-    {
-        tempPix = pix;    //将以前pix中的内容复制到tempPix中，这样实现了交互绘图
+    if(isDrawing) {
+        tempPix = pix;
         QPainter pp(&tempPix);
-      //  pp.drawRect(x,y,w,h);
         pp.fillRect (x,y,w,h, Qt::green );
         painter.drawPixmap(0,0,tempPix);
-    }
-    else
-    {
+        pp.end();
+    } else {
         QPainter pp(&pix);
-        //pp.drawRect(x,y,w,h);
-          pp.fillRect (x,y,w,h, Qt::green );
+        pp.fillRect (x,y,w,h, Qt::green );
         painter.drawPixmap(0,0,pix);
+        pp.end();
     }
+    painter.end();
 }
-/*****************/
-void MainWindow::saveActionTriggered()
-{
-    emit changeCurrentShape(Shape::Pie);
-}
-void MainWindow::saveBmp()
-{
+
+void MainWindow::saveBmp() {
     pix.save("pix.bmp");
     inpainting test("pix.bmp");
-    test.process();
-   /* QPainter painter(this);
-    if(isDrawing)     //如果正在绘图
-    {
-        tempPix = pix;    //将以前pix中的内容复制到tempPix中，这样实现了交互绘图
-        QPainter pp(&tempPix);
-      //  pp.drawRect(x,y,w,h);
-        pix.save("pix.bmp");
-        inpainting test("pix.bmp");
-                test.process();
-    }
-    else
-    {
-        QPainter pp(&pix);
-        //pp.drawRect(x,y,w,h);
-        pix.save("pix.bmp");
-        inpainting test("pix.bmp");
-                test.process();
-    }*/
+    test.Process();
+    pix.load("result.bmp");
+    QPainter painter(this);
+    QPainter pp(&pix);
+    pp.fillRect (0,0,0,0, Qt::green );
+    painter.drawPixmap(0,0,pix);
+    pp.end();
 }
-void MainWindow::chooseBmp()
-{
+void MainWindow::chooseBmp() {
+    QString filename=QFileDialog::getOpenFileName(this,
+                                                  tr("Open Image"),"",
+                                                  tr("BMP(*.bmp);;JPG(*.jpg);;ALL files(*.*)"));
+         if(filename.isEmpty()) {
+             QMessageBox::information(this,
+                                      tr("Open Image"),
+                                      tr("Please select an image to open"));
+             filename=QFileDialog::getOpenFileName(this,
+                                                   tr("Open Image"),"",
+                                                   tr("BMP(*.bmp);;JPG(*.jpg);;ALL files(*.*)"));
+         }
 
+         if(!(pix.load(filename))) {
+             QMessageBox::information(this,
+                                      tr("Unable to open the Image"),
+                                      tr("Please select a valid image."));
+            return;
+          }
+         QWidget::update();
 }
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow() {
     delete ui;
 }
